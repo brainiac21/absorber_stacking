@@ -1,5 +1,7 @@
 import numpy as np
-
+'''
+this is the lib
+'''
 
 
 def distance(x, y, x1, y1):
