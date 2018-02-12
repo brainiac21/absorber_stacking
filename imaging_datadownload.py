@@ -4,6 +4,13 @@ import urllib
 from urllib.request import urlretrieve
 
 
+'''
+this is the script to download the sdss image data.
+In terminal, type: python imaging_datadownload.py filter_name dataset 
+
+'''
+
+
 color = sys.argv[1]
 color_array = ['u', 'g', 'r', 'i', 'z']
 
