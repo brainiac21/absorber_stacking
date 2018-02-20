@@ -82,17 +82,18 @@ def checkInner(data, sources, qX, qY, mean, stddev, pointer, gthresh):
 	for i in np.arange(source.shape[1]):
 		
 		gal = 0
-		if sources['type'][i][1] == 3:
+		if sources['TYPE'][i][1] == 3:
 			gal += 1
-		if sources['type'][i][2] == 3:
+		if sources['TYPE'][i][2] == 3:
 			gal += 1
-		if sources['type'][i][3] == 3:
+		if sources['TYPE'][i][3] == 3:
 			gal += 1
-
-		# The following if statement checks if the obj type is galaxy or star. If it's a galaxy and is fainter than the threshold,
-		# then do not mask
-
-		if sources['objc_type'][i] == 3 and sources['psfCounts'][i][pointer] < gthresh:
+		'''
+		The following if statement checks if the obj type is galaxy or star. If it's a galaxy and is fainter than the threshold,
+		then do not mask. Also, no masking is necessary for 2DAs, to my best knowledge, due to high redshift and intrinsic faintness.
+		
+		'''
+		if sources['OBJC_TYPE'][i] == 3 and sources['psfCounts'][i][pointer] < gthresh:
 			#print(gthresh)
 			#print(sources['psfCounts'][i][pointer])
 			#print(pointer)
