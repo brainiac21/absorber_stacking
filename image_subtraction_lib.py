@@ -98,8 +98,8 @@ def checkInner(data, sources, qX, qY, mean, stddev, pointer, gthresh):
 			#print(pointer)
 			continue
 			
-        xs = int(sources['COLC'][i, pointer])
-        ys = int(sources['ROWC'][i, pointer])
+        	xs = int(sources['COLC'][i, pointer])
+        	ys = int(sources['ROWC'][i, pointer])
 
 
 		if distance(xs,ys, qX, qY) > 5 and distance(xs,ys, qX, qY) < 300:
