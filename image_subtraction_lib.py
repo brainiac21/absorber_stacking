@@ -76,16 +76,33 @@ def floodfill(data, x, y, mean, threshold):
 
 def checkInner(data, sources, qX, qY, mean, stddev, pointer, gthresh):
     '''
-    function to mask out possible sources between 5 and 200 pixels
+    function to mask out possible sources between 5 and 300 pixels
     '''
 
 	for i in np.arange(source.shape[1]):
+		
+		gal = 0
+		if sources['type'][i][1] == 3:
+			gal += 1
+		if sources['type'][i][2] == 3:
+			gal += 1
+		if sources['type'][i][3] == 3:
+			gal += 1
+
+		# The following if statement checks if the obj type is galaxy or star. If it's a galaxy and is fainter than the threshold,
+		# then do not mask
+
+		if sources['objc_type'][i] == 3 and sources['psfCounts'][i][pointer] < gthresh:
+			#print(gthresh)
+			#print(sources['psfCounts'][i][pointer])
+			#print(pointer)
+			continue
+			
         xs = int(sources['COLC'][i, pointer])
         ys = int(sources['ROWC'][i, pointer])
 
 
-		if distance(xs,ys, qX, qY) > 5 and distance(xs,ys, qX, qY) < 200:
-
+		if distance(xs,ys, qX, qY) > 5 and distance(xs,ys, qX, qY) < 300:
 
 			data = floodfill(data, sx, sy, mean, mean + stddev)
 
@@ -168,9 +185,9 @@ def detflags(total):
 	return flags
 
 
-def mask_algorithms(image, xc, yc, obj_table, chunk_size, pointer):
+def mask_algorithms(image, xc, yc, obj_table, chunk_size, pointer, gthresh):
 
-   if inbounds(xc + chunk_size + 6, yc + chunk_size + 6) and inbounds(xc - chunk_size - 5, yc - chunk_size - 5):
+	if inbounds(xc + chunk_size + 6, yc + chunk_size + 6) and inbounds(xc - chunk_size - 5, yc - chunk_size - 5):
         upper_y = int(yc + chunk_size + 6)
         lower_y = int(yc - chunk_size - 5)
         upper_x = int(xc + chunk_size + 6)
